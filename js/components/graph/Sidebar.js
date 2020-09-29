@@ -9,10 +9,12 @@ export default class Sidebar extends React.Component {
       hidden: true,
       focusHidden: true,
       focusActive: false,
+      graphHidden: true,
       graphActive: false,
       sidebarFlipped: false,
     }
     this.toggleSidebar = this.toggleSidebar.bind(this);
+    this.showFocuses = this.showFocuses.bind(this);
   }
 
 
@@ -44,6 +46,7 @@ export default class Sidebar extends React.Component {
         hidden: true,
         focusHidden: true,
         focusActive: false,
+        graphHidden: true,
         graphActive: true,
         sidebarFlipped: false,
       })
@@ -65,9 +68,19 @@ export default class Sidebar extends React.Component {
     }
   }
 
+  showFocuses() {
+    this.setState({
+      focusHidden: false,
+      focusActive: true,
+      graphHidden: true,
+      graphActive: false,
+    });
+  }
+
   render() {
     const hiddenClass = this.state.hidden ? "hidden" : "";
-    const activeClass = this.state.active ? "active" : "";
+    const focusActiveClass = this.state.focusActive ? "active" : "";
+    const graphActiveClass = this.state.graphActive ? "active" : "";
     const focusClass = this.state.focusHidden ? "hidden" : "";
     const flippedClass = this.state.sidebarFlipped ? "flip" : "";
     return (
@@ -79,10 +92,10 @@ export default class Sidebar extends React.Component {
           </div>
           <nav id="sidebar-nav">
             <ul>
-              <li id="graphs-nav" className={activeClass}>
+              <li id="graphs-nav" className={graphActiveClass}>
                 <a href="">Graphs</a>
               </li>
-              <li id="focuses-nav" className={activeClass}>
+              <li id="focuses-nav" className={focusActiveClass} onClick={this.showFocuses}>
                 <a href="">Focuses</a>
               </li>
             </ul>

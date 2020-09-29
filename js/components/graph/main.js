@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const graphComponent = renderReactGraph("react-graph");
 
   $("#reset").click(function() {
-    graphComponent.reset();
+    // graphComponent.reset();
   });
 
   $(document).ready(function() {

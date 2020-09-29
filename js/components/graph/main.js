@@ -10,9 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
   ReactDOM.render(<Container />, document.getElementById("container"));
   const graphComponent = renderReactGraph("react-graph");
 
-  $("#reset").click(function() {
-    // graphComponent.reset();
-  });
+  // $("#reset").click(function() {
+  //   // graphComponent.reset();
+  // });
 
   $(document).ready(function() {
     $("#nav-export").click(function() {

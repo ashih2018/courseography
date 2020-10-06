@@ -1,5 +1,4 @@
 import React from "react";
-import ReactDOM from "react-dom";
 import Graph from "./Graph";
 import Sidebar from "./Sidebar";
 import PropTypes from "prop-types";
@@ -7,18 +6,10 @@ import PropTypes from "prop-types";
 // import * as sidebarDivs from "./sidebar/sidebar_divs.js";
 
 export default class Container extends React.Component {
-  componentDidMount() {
-    // Need to render Graph after mounted so we can render it on the react-graph div
-    ReactDOM.render(
-      <Graph start_blank={this.props.start_blank} edit={this.props.edit} initialDrawMode="draw-node" />,
-      document.getElementById("react-graph")
-    );
-  }
-
   render() {
     return (
       <React.Fragment>
-        <div id="react-graph" className="react-graph" />
+        <Graph start_blank={this.props.start_blank} edit={this.props.edit} initialDrawMode="draw-node" />
         <Sidebar />
       </React.Fragment>
     )

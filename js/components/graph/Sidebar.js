@@ -4,14 +4,17 @@ import Focus from "./Focus";
 
 export default class Sidebar extends React.Component {
   constructor(props) {
+
     super(props);
     this.state = {
       contentHidden: true,
       focusDisabled: false,
       graphActive: 0,
       graphName: "",
-      toggled: false
+      toggled: false,
+      graphSelection: "Computer Science"
     };
+    this.handleGraphSelection = this.handleGraphSelection.bind(this);
   }
 
   componentWillUpdate(prevProps) { 
@@ -20,6 +23,18 @@ export default class Sidebar extends React.Component {
         this.handleFocusEnabled(); 
       });
     }
+  }
+
+  componentDidUpdate(prevProps) { 
+      if (prevProps.graphName !== this.state.graphSelection) { 
+      this.setState({graphName: this.state.graphSelection }, () => {
+        this.props.updateGraph(this.state.graphSelection);
+      });
+    }
+  }
+
+  handleGraphSelection = (selection) => {
+    this.setState({ graphSelection: selection.target.value});
   }
 
   handleFocusEnabled = () => {
@@ -38,15 +53,8 @@ export default class Sidebar extends React.Component {
   createGraphButtons = () => {
     return this.props.graphs.map((graph, i) => {
       return (
-        <div
-          className="graph-button"
-          id={"graph-" + graph.id}
-          data-testid={"test-graph-" + i}
-          key={i}
-          onClick={() => this.props.updateGraph(graph.title)}
-        >
-          {graph.title}
-        </div>
+        <option id={"graph-" + graph.id} value={graph.title} className="graph-option" key={i}>
+          {graph.title}</option>
       )
     });
   }
@@ -158,10 +166,17 @@ export default class Sidebar extends React.Component {
     const focusHiddenClass = this.state.graphActive === 1 ? "hidden" : "";
     const graphHiddenClass = this.state.graphActive === 0 ? "hidden" : "";
 
-    return (
+    return ( 
       <div>
-        <div id="graphs" className={graphHiddenClass} data-testid="test-graph-buttons">
-          {this.createGraphButtons()}
+        <div id="graphs" className={graphHiddenClass}>
+          <form>
+            <label className="graph-options">
+              CHOOSE A DEPARTMENT:
+              <select value="Computer Science" onChange={this.handleGraphSelection}>
+              {this.createGraphButtons()}
+              </select>
+            </label>
+          </form>
         </div>
         <div id="focuses" className={focusHiddenClass} data-testid="test-focus-buttons">
           {this.createFocusButtons()}
